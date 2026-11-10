@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Calificaciones - Universidad de Córdoba</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📊 Calculadora de Calificaciones</h1>
+      <p>Universidad de Córdoba - Sistema de Gestión Académica</p>
+    </header>
+
+    <!-- Sección Colapsable de Ayuda -->
+    <details class="card help-card">
+      <summary>Ayuda</summary>
+      <div class="help-content">
+        <p>Definitiva = (C1×%1 + C2×%2 + C3×%3) / 100. Nota necesaria = (Objetivo – Acumulado) × 100 / PorcentajeRestante.</p>
+        <p>CSV: <code>Nombre,Código,Corte1,Corte2,Corte3</code>. Celda vacía = sin nota; 0 = nota cero.</p>
+        <p>Atajos: Ctrl+M agregar · Ctrl+S guardar · Ctrl+E exportar · Esc cerrar ventana.</p>
+      </div>
+    </details>
+
+    <!-- Barra de Herramientas y Configuración -->
+    <section class="card config-card">
+      <h2>⚙️ Configuración de Porcentajes</h2>
+      <div class="form-group row">
+        <div>
+          <label for="pct1">Porcentaje Corte 1 (%):</label>
+          <input type="number" id="pct1" value="30" min="0" max="100">
+        </div>
+        <div>
+          <label for="pct2">Porcentaje Corte 2 (%):</label>
+          <input type="number" id="pct2" value="30" min="0" max="100">
+        </div>
+        <div>
+          <label for="pct3">Porcentaje Corte 3 (%):</label>
+          <input type="number" id="pct3" value="40" min="0" max="100">
+        </div>
+      </div>
+      <div class="actions-bar">
+        <button id="btn-save-pct" class="btn-secondary">💾 Guardar Porcentajes</button>
+        <button id="btn-export" class="btn-outline">📁 Exportar a CSV (Ctrl + E)</button>
+        <label for="csv-file" class="btn-outline label-file">📥 Importar CSV</label>
+        <input type="file" id="csv-file" accept=".csv" style="display: none;">
+      </div>
+    </section>
+
+    <!-- Formulario de Registro / Edición -->
+    <section class="card">
+      <h2 id="form-title">➕ Registrar Estudiante (Ctrl + M)</h2>
+      <form id="student-form">
+        <input type="hidden" id="edit-index" value="-1">
+        <div class="form-group row">
+          <div class="flex-2">
+            <label for="name">Nombre del Estudiante:</label>
+            <input type="text" id="name" placeholder="Ej. Juan Pérez" required>
+          </div>
+          <div class="flex-1">
+            <label for="code">Código:</label>
+            <input type="text" id="code" placeholder="Ej. 123456" required>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div>
+            <label for="corte1">Corte 1:</label>
+            <input type="number" id="corte1" step="any" min="0" max="5" placeholder="Vacío si está en progreso">
+          </div>
+          <div>
+            <label for="corte2">Corte 2:</label>
+            <input type="number" id="corte2" step="any" min="0" max="5" placeholder="Vacío si está en progreso">
+          </div>
+          <div>
+            <label for="corte3">Corte 3:</label>
+            <input type="number" id="corte3" step="any" min="0" max="5" placeholder="Vacío si está en progreso">
+          </div>
+        </div>
+
+        <div class="form-buttons">
+          <button type="submit" id="btn-submit" class="btn-primary">Guardar Estudiante (Ctrl + S)</button>
+          <button type="button" id="btn-cancel" class="btn-cancel" style="display:none;">Cancelar (Esc)</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Tabla de Estudiantes -->
+    <section class="card">
+      <h2>📋 Listado de Estudiantes y Predicciones</h2>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th>C1</th>
+              <th>C2</th>
+              <th>C3</th>
+              <th>Definitiva</th>
+              <th>Predicción / Nota Necesaria</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="student-list"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
